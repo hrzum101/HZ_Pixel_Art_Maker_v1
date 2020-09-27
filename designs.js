@@ -1,33 +1,41 @@
-// Select color input
-const color = document.querySelector('#colorPicker');
+const canvasInfo = {
+    submit: document.querySelector('#sizePicker'),
+    canvas: document.querySelector('#pixelCanvas'),
+    color: document.querySelector('#colorPicker'),
+    gridHeight: document.querySelector('#inputHeight'),
+    gridWidth: document.querySelector('#inputWidth'),
+    bgfill: function(fill) {
+        if (fill.target.nodeName ==='TD') {
+            fill.target.style.backgroundColor = canvasInfo.color.value;
+        }
+    },
+};
 
-// Select size input
-const canvasHeight = document.querySelector('#inputHeight');
-const canvasWidth = document.querySelector('#inputWidth');
-const canvasCanvas = document.querySelector('#pixelCanvas');
-const gridSubmit = document.querySelector('#sizePicker');
-
-// Listens for the user to Submit the grid and will clear grid
-gridSubmit.addEventListener('submit', function(submit) {
-	canvasCanvas.innerHTML = '';
-	submit.preventDefault();
-	makeGrid();
+// Reference https://www.w3schools.com/jsref/prop_color_value.asp
+canvasInfo.canvas.addEventListener('click', function(fill) {
+    canvasInfo.bgfill(fill)
 });
 
-// Changes the color of the Cell
-canvasCanvas.addEventListener('click', function(fill) {
-	if (fill.target.nodeName === 'TD') {
-		fill.target.style.backgroundColor = color.value;
-	}
+// Reference https://www.w3schools.com/JSREF/event_preventdefault.asp
+canvasInfo.submit.addEventListener('submit', function (submit){
+    submit.preventDefault();
+    makeGrid();
 });
 
-// When size is submitted by the user, call makeGrid()
+// Reference Udacity > Javascript > Lesson 9: Creating Content with JavaScript > 
+// Section 2. Updating Existing page Content
+// Used nested loops concept found in Javascript > Lesson 4: Loops > Quiz: Find my Seat
+// Inserting Rows Reference https://www.w3schools.com/jsref/met_table_insertrow.asp
+// Inserting Cells Reference Reference https://www.w3schools.com/jsref/met_tablerow_insertcell.asp
 function makeGrid() {
-	for (var h = 0; h < canvasHeight.value; h++) {
-		const height = canvasCanvas.insertRow(0);
+    canvasInfo.canvas.innerHTML = '';
 
-		for (var w = 0; w < canvasWidth.value; w++) {
-			height.insertCell(0);
-		}
-	}
+    for (var row = 0; row < canvasInfo.gridHeight.value; row++) {
+            pixelTable = canvasInfo.canvas.insertRow(0);
+
+        for (var column = 0; column < canvasInfo.gridWidth.value; column++) {
+            pixelTable.insertCell(0);
+
+        }
+    }
 }
